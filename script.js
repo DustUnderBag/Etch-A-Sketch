@@ -22,3 +22,9 @@ for(let i = 0; i < tileNum * tileNum; i++) {
 
     console.log(tileIndex);
 }
+
+tiles.forEach(tile => {
+    tile.addEventListener('mouseover', e => {
+        e.target.classList.add("filled");
+    });
+});
