@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 10px;
+}
+.canvas {
+    margin: 10px;
+    background-color: rgb(97, 97, 97);
+}
