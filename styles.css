@@ -4,12 +4,14 @@
     box-sizing: border-box;
 }
 
-h1 {
+body{
     margin: 10px;
 }
 
+h1 {
+}
+
 .canvas {
-    margin: 10px;
     background-color: pink;
     display: flex;
     flex-wrap: wrap;

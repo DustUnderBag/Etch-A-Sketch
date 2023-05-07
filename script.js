@@ -1,36 +1,49 @@
 const canvas = document.querySelector('.canvas');
-let tiles = [];
+const button = document.querySelector('button.tile-num');
 
 const canvasSize = 500;
-
-let tileNum = Number(prompt("Please enter Number only!", 16));
-
-let tileSize = canvasSize / tileNum + "px";
-console.log(tileSize);
-
 canvas.style.width = canvasSize + "px";
 canvas.style.height = canvasSize + "px";
 
-createTiles();
+let tiles = [];
+
+createTiles(getTileNum());
 
 tiles.forEach(tile => {
-    tile.addEventListener( "mouseover", e => fillTiles(e) );
 });
 
-function createTiles() {
+button.addEventListener('click', () => {
+    removeTiles();
+    createTiles(getTileNum());
+});
+
+function createTiles(tileNum) {
+    let tileSize = canvasSize / tileNum + "px";
     for(let i = 0; i < tileNum * tileNum; i++) {
-        let tileIndex = "tile" + i;
         tiles[i] = document.createElement('div');
         tiles[i].classList.add('tile');
+
+        let tileIndex = "tile" + i;
         tiles[i].setAttribute("id", tileIndex);
-    
+
         tiles[i].style.width = tileSize;
         tiles[i].style.height = tileSize;
     
         canvas.appendChild(tiles[i]);
+
+        tiles[i].addEventListener( "mouseover", () => tiles[i].classList.add("filled"));
     }
 }
 
-function fillTiles(e) {
-    e.target.classList.add("filled");
+
+function removeTiles() {
+    tiles.forEach(tile => canvas.removeChild(tile) );
+    tiles = [];
+}
+
+function getTileNum() {
+    let tileNum = prompt("Please enter tile num", 16);
+    if(tileNum > 100) tileNum = 100;
+    console.log(tileNum);
+    return tileNum;
 }
