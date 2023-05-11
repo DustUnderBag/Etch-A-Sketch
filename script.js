@@ -1,5 +1,7 @@
 const canvas = document.querySelector('.canvas');
 const button = document.querySelector('button.tile-num');
+const slider = document.querySelector('input.slider');
+const sliderValue = document.querySelector('span.slider-value');
 
 const canvasSize = 500;
 canvas.style.width = canvasSize + "px";
@@ -9,8 +11,11 @@ let tiles = [];
 
 createTiles(getTileNum());
 
-tiles.forEach(tile => {
+slider.addEventListener("change", () => {
+    removeTiles();
+    createTiles(getTileNum());
 });
+
 
 button.addEventListener('click', () => {
     removeTiles();
@@ -38,12 +43,13 @@ function createTiles(tileNum) {
 
 function removeTiles() {
     tiles.forEach(tile => canvas.removeChild(tile) );
-    tiles = [];
+    tiles = []; //clear array list of tiles.
 }
 
 function getTileNum() {
-    let tileNum = prompt("Please enter tile num", 16);
+    let tileNum = slider.value;
     if(tileNum > 100) tileNum = 100;
     console.log(tileNum);
+    sliderValue.textContent = tileNum + "x";
     return tileNum;
 }
