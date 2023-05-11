@@ -16,12 +16,6 @@ slider.addEventListener("change", () => {
     createTiles(getTileNum());
 });
 
-
-button.addEventListener('click', () => {
-    removeTiles();
-    createTiles(getTileNum());
-});
-
 function createTiles(tileNum) {
     let tileSize = canvasSize / tileNum + "px";
     for(let i = 0; i < tileNum * tileNum; i++) {
