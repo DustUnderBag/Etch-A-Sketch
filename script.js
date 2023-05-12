@@ -1,5 +1,7 @@
 const canvas = document.querySelector('.canvas');
-const button = document.querySelector('button.tile-num');
+
+const colorInput = document.querySelector('input.color-input');
+
 const slider = document.querySelector('input.slider');
 const sliderValue = document.querySelector('span.slider-value');
 
@@ -11,7 +13,7 @@ let tiles = [];
 
 createTiles(getTileNum());
 
-slider.addEventListener("change", () => {
+slider.addEventListener("input", () => {
     removeTiles();
     createTiles(getTileNum());
 });
@@ -30,10 +32,9 @@ function createTiles(tileNum) {
     
         canvas.appendChild(tiles[i]);
 
-        tiles[i].addEventListener( "mouseover", () => tiles[i].classList.add("filled"));
+        tiles[i].addEventListener( "mouseover", draw);
     }
 }
-
 
 function removeTiles() {
     tiles.forEach(tile => canvas.removeChild(tile) );
@@ -46,4 +47,22 @@ function getTileNum() {
     console.log(tileNum);
     sliderValue.textContent = tileNum + "x";
     return tileNum;
+}
+
+function draw() {
+    let colorMode = randomizeColor();
+    this.style.backgroundColor = colorMode;
+}
+
+function randomizeColor() {
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+    let color = `rgb(${r},${g},${b})`;
+    return color;
+}
+
+function pickColor() {
+    let color = colorInput.value;
+    return color;
 }
