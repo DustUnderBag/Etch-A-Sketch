@@ -9,26 +9,28 @@
 </head>
 <body>
     <h1>Etch-A-Sketch</h1>
+    <main>
+        <div class="sidebar">
+            <div class="color-modes">
+                <input type="color" value="#000000" class="color-input">
+                <button class="rainbow-toggle" id="rainbow">Rainbow Mode</button>
+            </div>
     
-    <div class="color-modes">
-        <input type="color" value="#000000" class="color-input">
-        <button class="rainbow-toggle" id="rainbow">Rainbow Mode</button>
-    </div>
+            <div class="toolbox">
+                <button class="brush" id="brush">Brush</button>
+                <button class="eraser" id="erase">Eraser</button>
+                <button class="clearer">Clear</button>
+            </div>
+        </div>
 
-    <div class="toolbox">
-        <button class="brush" id="brush">Brush</button>
-        <button class="eraser" id="erase">Eraser</button>
-        <button class="clearer">Clear</button>
-    </div>
-
-    <div>
-        <span class="slider-value"></span>
-        <input type="range" value="16" min="1" max="100" class="slider">
-    </div>
-
-    <div class="canvas"></div>
-
-
+        <div>
+            <div class="canvas"></div>
+            <div>
+                <span class="slider-value"></span>
+                <input type="range" value="16" min="1" max="100" class="slider">
+            </div>   
+        </div>
+    </main>
     <script src="./script.js"></script>
 </body>
 </html>
