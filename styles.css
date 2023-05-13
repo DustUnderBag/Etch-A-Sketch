@@ -1,26 +1,106 @@
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-align: center;
 }
 
 body{
+    width: 100%;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.25rem;
     margin: 10px;
 }
 
 h1 {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    gap: 50px;
+    width: 1000px;
+    margin: 10px auto;
+}
+
+div.sidebar {
+    border: black 2px solid;
+    padding: 1rem;
+    border-radius: 10px;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.color-modes,
+.toolbox {
+    display:flex;
+    margin: 20px 0;
+    flex-direction: column;
+}
+
+input.color-input {
+    width: 80px;
+    height: 80px;
+    border: none;
+    padding: 0px;
+    background-color: transparent;
+    margin: 0.5rem auto;
+}
+
+input.color-input::-webkit-color-swatch {
+    border: 2px black solid;
+    border-radius: 50%;
+    padding: 0;
+}
+
+input.color-input::-webkit-color-swatch-wrapper {
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 8px 16px 0 rgb(0,0,0, 0.5);
+}
+
+button {
+    margin: 5px auto;
+    padding: 1rem;
+    border: 2px black solid;
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: transparent;
+}
+
+button:hover {
+    color:white;
+    background-color: rgb(47, 47, 47);
+    border: 2px white solid;
+}
+
+.toggled {
+    color:white;
+    background-color: rgb(47, 47, 47);
+    border: 2px white solid;
 }
 
 .canvas {
     background-color: grey;
     display: flex;
     flex-wrap: wrap;
+    margin-inline: auto;
+}
+
+
+
+input[type=range] {
+    width:200px;
+    text-align: center;
 }
 
 .tile {
     border: black 0.5px solid;
 }
 
-.toggled {
-    background-color: rgb(207, 17, 17);
-}
