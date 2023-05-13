@@ -1,9 +1,12 @@
 const canvas = document.querySelector('.canvas');
-
 const colorInput = document.querySelector('input.color-input');
+const rainbowToggle = document.querySelector('button.rainbow-toggle');
+const eraseToggle =document.querySelector('button.erase-toggle');
 
 const slider = document.querySelector('input.slider');
 const sliderValue = document.querySelector('span.slider-value');
+
+let drawMode = "customColor";
 
 const canvasSize = 500;
 canvas.style.width = canvasSize + "px";
@@ -16,6 +19,29 @@ createTiles(getTileNum());
 slider.addEventListener("input", () => {
     removeTiles();
     createTiles(getTileNum());
+});
+
+colorInput.addEventListener('input',() => {
+    drawMode = "customColor";
+    rainbowToggle.classList.remove("toggled");
+    eraseToggle.classList.remove("toggled");
+});
+
+rainbowToggle.addEventListener('click', () => {
+    rainbowToggle.classList.toggle("toggled");
+    eraseToggle.classList.remove("toggled");
+
+    if(drawMode !== "rainbow") {
+        drawMode = "rainbow";
+    }else {
+        drawMode = "customColor";
+    }
+});
+
+eraseToggle.addEventListener('click', () => {
+    eraseToggle.classList.add("toggled");
+    rainbowToggle.classList.remove("toggled");
+    drawMode = "erase";
 });
 
 function createTiles(tileNum) {
@@ -50,8 +76,17 @@ function getTileNum() {
 }
 
 function draw() {
-    let colorMode = randomizeColor();
-    this.style.backgroundColor = colorMode;
+    switch(drawMode) {
+        case "customColor":
+            color = pickColor();
+            break;
+        case "rainbow":
+            color = randomizeColor();
+            break;
+        case "erase":
+            color = "transparent";
+    }
+    this.style.backgroundColor = color;
 }
 
 function randomizeColor() {
