@@ -1,48 +1,79 @@
 const canvas = document.querySelector('.canvas');
+
+//Color Modes
 const colorInput = document.querySelector('input.color-input');
 const rainbowToggle = document.querySelector('button.rainbow-toggle');
-const eraseToggle =document.querySelector('button.erase-toggle');
 
+let colorMode = "customColor"; // "customColor" OR "rainbow"
+
+//Draw Modes
+const brush = document.querySelector('button.brush');
+const eraser =document.querySelector('button.eraser');
+const clearer = document.querySelector('button.clearer');
+
+let drawMode = "draw"; // "draw" or "erase"
+brush.classList.add("toggled");
+
+//Set resolution
 const slider = document.querySelector('input.slider');
 const sliderValue = document.querySelector('span.slider-value');
 
-let drawMode = "customColor";
-
+//Initialze canvas Size
 const canvasSize = 500;
 canvas.style.width = canvasSize + "px";
 canvas.style.height = canvasSize + "px";
 
+//Initialize canvas and tiles
 let tiles = [];
-
 createTiles(getTileNum());
 
+//Initialize color
+colorInput.value = "#D6301F";
+let color = colorInput.value;
+
+//Set resolution
 slider.addEventListener("input", () => {
-    removeTiles();
+    clearTiles();
     createTiles(getTileNum());
 });
 
-colorInput.addEventListener('input',() => {
-    drawMode = "customColor";
-    rainbowToggle.classList.remove("toggled");
-    eraseToggle.classList.remove("toggled");
+//Set drawMode
+brush.addEventListener('click', () => {
+    drawMode = "draw";
+    brush.classList.add("toggled");
+
+    eraser.classList.remove('toggled');
 });
 
-rainbowToggle.addEventListener('click', () => {
-    rainbowToggle.classList.toggle("toggled");
-    eraseToggle.classList.remove("toggled");
-
-    if(drawMode !== "rainbow") {
-        drawMode = "rainbow";
-    }else {
-        drawMode = "customColor";
-    }
-});
-
-eraseToggle.addEventListener('click', () => {
-    eraseToggle.classList.add("toggled");
-    rainbowToggle.classList.remove("toggled");
+eraser.addEventListener('click', () => {
     drawMode = "erase";
+    eraser.classList.add('toggled');
+
+    brush.classList.remove('toggled');
 });
+
+clearer.addEventListener('click', () => {
+    tiles.forEach(tile => {
+        tile.style.backgroundColor = "transparent";
+    })
+});
+
+//Pick custom color
+colorInput.addEventListener('input',() => {
+    colorMode = "customColor";
+    rainbowToggle.classList.remove("toggled");
+});
+
+//Toggle rainbow mode
+rainbowToggle.addEventListener('click', () => {
+    if(colorMode !== "rainbow") {
+        colorMode = "rainbow";
+    }else {
+        colorMode = "customColor";
+    }
+    rainbowToggle.classList.toggle("toggled");
+});
+
 
 function createTiles(tileNum) {
     let tileSize = canvasSize / tileNum + "px";
@@ -58,11 +89,17 @@ function createTiles(tileNum) {
     
         canvas.appendChild(tiles[i]);
 
-        tiles[i].addEventListener( "mouseover", draw);
+        tiles[i].addEventListener( "mouseover", (e) => {
+            if(drawMode === "draw") {
+              drawTile(e);
+            }else {
+                eraseTile(e);
+            }  
+        });
     }
 }
 
-function removeTiles() {
+function clearTiles() {
     tiles.forEach(tile => canvas.removeChild(tile) );
     tiles = []; //clear array list of tiles.
 }
@@ -75,20 +112,25 @@ function getTileNum() {
     return tileNum;
 }
 
-function draw() {
-    switch(drawMode) {
+//Draw
+function drawTile(e) {
+    switch(colorMode) {
         case "customColor":
             color = pickColor();
             break;
         case "rainbow":
             color = randomizeColor();
             break;
-        case "erase":
-            color = "transparent";
     }
-    this.style.backgroundColor = color;
+    e.target.style.backgroundColor = color;
 }
 
+//Erase
+function eraseTile(e) {
+    e.target.style.backgroundColor = "transparent";
+}
+
+//Color Mode Functions
 function randomizeColor() {
     let r = Math.floor(Math.random() * 255);
     let g = Math.floor(Math.random() * 255);
