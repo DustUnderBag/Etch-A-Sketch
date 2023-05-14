@@ -19,9 +19,8 @@ h1 {
 
 main {
     display: flex;
+    justify-content: center;
     gap: 50px;
-    width: 1000px;
-    margin: 10px auto;
 }
 
 div.sidebar {
